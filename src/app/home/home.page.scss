@@ -1,1 +1,32 @@
 
+.spot-blue{
+    margin-left: 2%;
+    background-color: blue;
+    min-height: 100px;
+}
+
+.container{
+    padding-top: 50px
+}
+
+ion-row{
+    height: 300px;
+    border: solid aliceblue;
+}
+.ion-col{
+    border: 1px solid black;
+}
+.ion-col.available{
+    border: 1px solid green;
+    background-color: #C0D890;
+}
+
+.ion-col.not_available{
+    border: 1px solid red;
+    background-color: #ED4337;
+}
+
+.line-chart
+{
+    border: 1px solid lightgray;
+}   

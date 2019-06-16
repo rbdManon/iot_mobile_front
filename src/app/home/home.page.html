@@ -1,14 +1,63 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>
-      Ionic Blank
+      Parking
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <div class="ion-padding">
-    The world is your oyster.
-    <p>If you get lost, the <a target="_blank" rel="noopener" href="https://ionicframework.com/docs/">docs</a> will be your guide.</p>
-  </div>
+
+
+    <div class="container" style="text-align:center">
+        <h1 style="margin-bottom:30px">Gestion du parking</h1>
+        <ion-row style="margin-bottom: 100px;">
+          <ion-col class="ion-col" sizeMd="2" value="A">A</ion-col>
+          <ion-col class="ion-col" sizeMd="2" value="B">B</ion-col>
+          <ion-col class="ion-col" sizeMd="2" value="C">C</ion-col>
+          <ion-col class="ion-col" sizeMd="2" value="D">D</ion-col>
+          <ion-col class="ion-col" sizeMd="2" value="E">E</ion-col>
+          <ion-col class="ion-col" sizeMd="2" value="F">F</ion-col>
+        </ion-row>
+
+        <ion-row>
+            <ion-col class="ion-col" sizeMd="2" value="G">G</ion-col>
+            <ion-col class="ion-col" sizeMd="2" value="H">H</ion-col>
+            <ion-col class="ion-col" sizeMd="2" value="I">I</ion-col>
+            <ion-col class="ion-col" sizeMd="2" value="J">J</ion-col>
+            <ion-col class="ion-col" sizeMd="2" value="K">K</ion-col>
+            <ion-col class="ion-col" sizeMd="2" value="L">L</ion-col>
+        </ion-row>
+    </div>
+    <script>
+      $(function () {
+          $(function () {
+              setInterval(requestData, 1000);
+          });
+    
+          function requestData() {
+              var array = []
+              $.getJSON('http://localhost:3000/getAllSensor', function (data) {
+                  for (var element in data) {
+                      if (data[element].is_active) {
+                          array.push(data[element].id)
+                      }
+                  }
+              }).then(function () {
+                  $(".ion-col").each(function () {
+                    console.log($(this))
+    
+                      if (array.includes(this.getAttribute('value'))) {
+    
+                          $(this).addClass('available')
+                      } else {
+                          $(this).addClass('not_available')
+                      }
+                  });
+              })
+          }
+      });
+    </script>
 </ion-content>
+
+
