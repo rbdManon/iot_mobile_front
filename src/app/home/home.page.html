@@ -7,8 +7,6 @@
 </ion-header>
 
 <ion-content>
-
-
     <div class="container" style="text-align:center">
         <h1 style="margin-bottom:30px">Gestion du parking</h1>
         <ion-row style="margin-bottom: 100px;">
@@ -29,35 +27,6 @@
             <ion-col class="ion-col" sizeMd="2" value="L">L</ion-col>
         </ion-row>
     </div>
-    <script>
-      $(function () {
-          $(function () {
-              setInterval(requestData, 1000);
-          });
-    
-          function requestData() {
-              var array = []
-              $.getJSON('http://localhost:3000/getAllSensor', function (data) {
-                  for (var element in data) {
-                      if (data[element].is_active) {
-                          array.push(data[element].id)
-                      }
-                  }
-              }).then(function () {
-                  $(".ion-col").each(function () {
-                    console.log($(this))
-    
-                      if (array.includes(this.getAttribute('value'))) {
-    
-                          $(this).addClass('available')
-                      } else {
-                          $(this).addClass('not_available')
-                      }
-                  });
-              })
-          }
-      });
-    </script>
 </ion-content>
 
 

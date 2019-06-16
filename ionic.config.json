@@ -1,6 +1,8 @@
 {
   "name": "iotMps",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular",
   "id": "66490a64"
 }
