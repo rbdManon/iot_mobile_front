@@ -9,10 +9,10 @@ import { AlertController } from '@ionic/angular';
 })
 export class HomePage {
 
-  constructor(public alertCtrl : AlertController) { }
-  public verifBook(event){
-    let id:string;
-    id =event.target.id;
+  constructor(public alertCtrl: AlertController) { }
+  public verifBook(event) {
+    let id: string;
+    id = event.target.id;
     this.alertCtrl.create({
       header: 'Informations',
       subHeader: 'Confirmation reservation',
@@ -22,54 +22,63 @@ export class HomePage {
           name: 'book',
           type: 'text',
           placeholder: 'Reservation',
-          value:id,
-          disabled:true
+          value: id,
+          disabled: true
         }],
-        buttons: [
-          {
-            text: 'Annuler',
-            role: 'cancel',
-            cssClass: 'secondary'
-          }, {
-            text: 'Réserver',
-            handler: () => {
-              this.book(id)
-            }
+      buttons: [
+        {
+          text: 'Annuler',
+          role: 'cancel',
+          cssClass: 'secondary'
+        }, {
+          text: 'Réserver',
+          handler: () => {
+            this.book(id)
           }
-        ]
-    }).then((alert) => alert.present()); 
+        }
+      ]
+    }).then((alert) => alert.present());
   }
-  public book(id){
-       $.ajax({
-        url:'http://localhost:3000/updateSensor/'+id,
-        type:'PUT',
-        contentType:'application/json',
-        data:JSON.stringify({"_id": "5cbf54182c339b42c8b95cd0","id": "A","is_active": true, "__v": 0,"is_booking": true  })
-      });
-      
+  public book(id) {
 
+    var data = JSON.stringify({ "id": id, "is_active": true, "is_booking": true })
+    $.post('http://localhost:3000/updateSensor/' + id, data, function (data) {
+      $(".result").html(data);
+    });
   }
-  ngAfterViewInit () {
+  ngAfterViewInit() {
     //console.log('test')
-      setInterval(requestData, 1000);
+    setInterval(requestData, 1000);
 
     function requestData() {
-      var array = []
+      var is_active = []
+      var is_booking = []
+
       $.getJSON('http://localhost:3000/getAllSensor', function (data) {
         for (var element in data) {
           if (data[element].is_active) {
-            array.push(data[element].id)
+            is_active.push(data[element].id)
+          }
+          if (data[element].is_booking) {
+            is_booking.push(data[element].id)
           }
         }
       }).then(function () {
         $(".ion-col").each(function () {
-          //console.log($(this))
-          if (array.includes(this.getAttribute('value'))) {
+          if (is_active.includes(this.getAttribute('value'))) {
             $(this).removeClass('not_available')
             $(this).addClass('available')
           } else {
             $(this).removeClass('available')
             $(this).addClass('not_available')
+          }
+
+          if (is_booking.includes(this.getAttribute('value'))) {
+            $(this).removeClass('available')
+            $(this).addClass('is_booking')
+          } else {
+            $(this).removeClass('is_booking')
+            $(this).addClass('available')
           }
         });
       })
