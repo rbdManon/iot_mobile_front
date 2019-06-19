@@ -23,10 +23,11 @@ export class HomePage {
         }
       }).then(function () {
         $(".ion-col").each(function () {
-          console.log($(this))
           if (array.includes(this.getAttribute('value'))) {
+            $(this).removeClass('not_available')
             $(this).addClass('available')
           } else {
+            $(this).removeClass('available')
             $(this).addClass('not_available')
           }
         });
